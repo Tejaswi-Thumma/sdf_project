@@ -257,3 +257,68 @@ public class AInteger {
         return final_result;
 
     }
+
+    public boolean isSmaller(String str1, String str2) {
+        if (str1.length() < str2.length()) return true;
+        if (str1.length() > str2.length()) return false;
+        return str1.compareTo(str2) < 0;
+    }
+
+
+    public String subtract_these_both_strings(String num1, String num2 ) {
+
+        // Remove leading zeros
+        num1 = removing_leading_zeros(num1);
+        num2 = removing_leading_zeros(num2);
+
+        // creating 2 integer arrays for given strings
+        int[] array1_num1 = stringToIntegerArray(num1);
+        int[] array2_num2 = stringToIntegerArray(num2);
+
+        boolean isNegative = false;
+
+        // making num1 higher than num2 , if it is smaller we will check with isSmaller and if yes we will swap to make sure num1>num2
+        if(isSmaller(num1, num2)) {
+            int[] temp = array1_num1;
+            array1_num1 = array2_num2;
+            array2_num2 = temp;
+            isNegative = true;
+        }
+
+
+        int[] result_array = new int[array1_num1.length];
+        int borrow = 0;
+        int diff = array1_num1.length - array2_num2.length;
+
+        for (int i = array2_num2.length - 1; i >= 0; i--) {
+            int sub = array1_num1[i + diff] - array2_num2[i] - borrow;
+            if (sub < 0) {
+                sub += 10;
+                borrow = 1;
+            } else {
+                borrow = 0;
+            }
+            result_array[i + diff] = sub;
+        }
+
+        for (int j = diff - 1; j >= 0; j--) {
+            int sub = array1_num1[j] - borrow;
+            if (sub < 0) {
+                sub += 10;
+                borrow = 1;
+            } else {
+                borrow = 0;
+            }
+            result_array[j] = sub;
+        }
+
+        String result_string = arrayTostring(result_array);
+        String final_result = removing_leading_zeros(result_string);
+
+        if(isNegative ) {
+            final_result = "-" + final_result;
+        }
+        
+        return final_result;
+
+    }
