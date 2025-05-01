@@ -185,7 +185,74 @@ public class AFloat {
 
     }
 
+    public AFloat multiply(AFloat other) {
+        String num1 = this.float_value;
+        String num2 = other.float_value;
+
+        boolean isNegative1 = num1.startsWith("-");
+        boolean isNegative2 = num2.startsWith("-");
     
+        if (isNegative1) {
+            num1 = num1.substring(1);
+        }
+        if (isNegative2) {
+            num2 = num2.substring(1);
+        }
+
+        // Handle negative cases
+        if (isNegative1 && isNegative2) { // (-a)*(-b) = a*b
+            return new AFloat(num1).multiply(new AFloat(num2));
+        } else if (isNegative1) {
+            // (-a)*(b) = -a*b
+            return new AFloat("-" + new AFloat(num1).multiply(new AFloat(num2)).toString());
+        } else if (isNegative2) {
+            // a *(-b) = -a*b
+            return new AFloat("-" + new AFloat(num1).multiply(new AFloat(num2)).toString());
+        }
+
+        int no_of_decimal_digits_in_num1 = 0;
+        int no_of_decimal_digits_in_num2 = 0;
+        //removing decimal points from strings and storing the number of decimal digits
+        if(num1.contains(".")) {
+            no_of_decimal_digits_in_num1 = num1.length() -num1.indexOf('.') -1;
+            num1 = num1.replace(".", "");
+        }
+        if(num2.contains(".")) {
+            no_of_decimal_digits_in_num2 = num2.length() -num2.indexOf('.') -1;
+            num2 = num2.replace(".", "");
+        }
+
+        //multiplying numbers without decimal points
+        AInteger multiplication= new AInteger(num1).multiply(new AInteger(num2));
+        String multiplication_String = multiplication.toString();
+
+        // adding decimal point after multiplying
+        int total_no_of_decimal_places = no_of_decimal_digits_in_num1 + no_of_decimal_digits_in_num2;
+        // if we have 0.0003 and 0.05 if we multiply them we will get 0.000015 so to get enough zeros to place the decimal point we add zeros.
+        while (multiplication_String.length() <= total_no_of_decimal_places) {
+            multiplication_String = "0" + multiplication_String;
+        }
+        // we need to put decimal at k+1th position from end
+        int k = multiplication_String.length() - total_no_of_decimal_places;
+        String integer_part = multiplication_String.substring(0, k);
+        String decimal_part = multiplication_String.substring(k);
+
+        // to check precision upto 30 decimal points
+        if(decimal_part.length()<30) {
+            decimal_part += "0"; // if len<30 we add zeros to make it 30 digits
+        }
+        else {
+            decimal_part = decimal_part.substring(0, 30); // if len>= 30 we only take first 30 digits
+        }
+
+        String finalresult = integer_part + "." + decimal_part;
+
+        return new AFloat(finalresult);
+
+
+    }
+
+
 
 }
 
