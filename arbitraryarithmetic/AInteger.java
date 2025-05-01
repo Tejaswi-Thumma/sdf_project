@@ -358,3 +358,54 @@ public class AInteger {
 
 
     }
+
+    public String divide_these_both_strings(String num1, String num2) {
+
+        try {
+        // Remove leading zeros
+        num1 = removing_leading_zeros(num1);
+        num2 = removing_leading_zeros(num2);
+
+
+        if(num2.equals("0")) {
+            throw new ArithmeticException("Division by zero is not allowed");
+        }
+
+        if(num1.equals("0") || isSmaller(num1,num2)) {
+            return "0";
+        }
+
+        if(num1.equals(num2)) {
+            return "1";
+        }
+
+        StringBuilder quotient = new StringBuilder();
+
+        String current = "";
+
+        for (int i = 0; i < num1.length(); i++) {
+    
+            current = current + num1.charAt(i);           
+            current = removing_leading_zeros(current);  
+            
+            int count = 0;                         
+            
+            while (!isSmaller(current, num2)) {   
+                current = subtract_these_both_strings(current, num2); 
+                count++;                           
+            }
+
+            if(count == 0 && i == num1.length() -1) {
+                continue;
+            }
+        
+            quotient.append(count);                 
+        }
+        
+        return removing_leading_zeros(quotient.toString());
+    }
+        catch (ArithmeticException e) {
+            return e.getMessage();
+    }
+
+    }
