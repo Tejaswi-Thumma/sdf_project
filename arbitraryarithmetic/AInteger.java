@@ -322,3 +322,39 @@ public class AInteger {
         return final_result;
 
     }
+
+    public String multiply_these_both_strings(String num1, String num2) {
+
+        // Remove leading zeros
+        num1 = removing_leading_zeros(num1);
+        num2 = removing_leading_zeros(num2);
+
+        if(num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        // creating 2 integer arrays for given strings
+        int[] array1_num1 = stringToIntegerArray(num1);
+        int[] array2_num2 = stringToIntegerArray(num2);
+
+        int[] result_array = new int[array1_num1.length + array2_num2.length];
+
+        for(int i = array2_num2.length -1; i>=0 ; i--) {
+            int carry = 0;
+            int position_of_result = array1_num1.length +i;
+
+            for(int j=array1_num1.length-1; j>=0;j++) {
+                int product = (array2_num2[i] * array1_num1[j]) + result_array[position_of_result] + carry;
+                result_array[position_of_result] = product%10;
+                carry = product/10;
+                position_of_result--;
+            }
+            result_array[position_of_result] += carry;
+ 
+        }
+        String result_string = arrayTostring(result_array);
+        String final_result = removing_leading_zeros(result_string);
+
+        return final_result;
+
+
+    }
