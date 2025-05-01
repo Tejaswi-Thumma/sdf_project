@@ -215,3 +215,45 @@ public class AInteger {
         return required_string.toString();
 
     }
+
+    // adding two numbers which are positive 
+    public String add_these_both_strings(String num1, String num2 ) {
+        //removing leading zeros
+        num1 = removing_leading_zeros(num1);
+        num2 = removing_leading_zeros(num2);
+
+        // creating 2 arrays and converting given strings into integer arrays
+        int[] array1_num1 = stringToIntegerArray(num1);
+        int[] array2_num2 = stringToIntegerArray(num2);
+
+        // making num1 higher
+        if(array1_num1.length < array2_num2.length ) {
+            int [] temp = array1_num1;
+            array1_num1 = array2_num2;
+            array2_num2 = temp;
+        }
+
+        int[] result_array = new int[array1_num1.length + 1];
+        int carry = 0;
+        int diff = array1_num1.length - array2_num2.length;
+
+        for(int i = array2_num2.length -1; i>= 0 ;i--) {
+            int sum = array2_num2[i] + array1_num1[i + diff] + carry;
+            result_array[i + diff + 1] = sum%10;
+            carry = sum/10;
+        }
+
+        for(int j = diff -1 ;j>=0 ;j--) {
+            int sum = array1_num1[j] + carry;
+            result_array[j+1]  = sum %10;
+            carry = sum/10;
+
+        }
+        result_array[0] = carry;
+
+        String result_string = arrayTostring(result_array);
+        String final_result = removing_leading_zeros(result_string);
+
+        return final_result;
+
+    }
