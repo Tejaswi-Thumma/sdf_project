@@ -194,3 +194,24 @@ public class AInteger {
             return new AInteger(quotient);
         }
     }
+
+    public static int[] stringToIntegerArray(String str) {
+        // Creating an array to store the integers
+        int[] intArray = new int[str.length()];
+
+        for (int i = 0; i < str.length(); i++) {
+            intArray[i] = str.charAt(i) - '0'; // Convert char to integer
+        }
+
+        return intArray;
+    }
+
+    public static String arrayTostring(int[] arr) {
+        StringBuilder required_string = new StringBuilder();
+
+        for(int i=0;i<arr.length;i++) {
+            required_string.append(arr[i]);
+        }
+        return required_string.toString();
+
+    }
