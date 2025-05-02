@@ -102,20 +102,6 @@
 - It is a Java file which imports the package and runs test cases.
 - It takes command-line arguments and performs arithmetic operations.
 
-### EXECUTING USING MYINFARITH
-To perform addition, subtraction, multiplication, and division, run the following commands:
-- command python3 Script.py
-- <int/float> <add/sub/mul/div> <operand1> <operand2>
-```bash
-java MyInfArith int add 49485475 9897557
-Result: 59383032
-java MyInfArith float sub 0.0099 0009
-Result: -8.9901
-java MyInfArith int mul 6 7
-Result: 42
-java MyInfArith int div 20 4
-Result: 5
-```
 ## Script.py
 - It is a python script which run the program with command lines arguments using MyInfarith.java
 ---
@@ -123,13 +109,13 @@ Result: 5
 To perform addition, subtraction, multiplication, and division, run the following commands:
 - command python runner.py <int/float> <add/sub/mul/div> <operand1> <operand2>
 ```bash
-python3 runner.py int add 2402726 -200000
+python3 Script.py int add 2402726 -200000
 Result: 2202726
- python3 runner.py int sub 58757 -8877
+ python3 Script.py int sub 58757 -8877
 Result: 67634
-python3 runner.py float mul 9.009 -07 
+python3 Script.py float mul 9.009 -07 
 Result: -63.063
-python3 runner.py float div 9 7 
+python3 Script.py float div 9 7 
 Result: 1.285714285714285714285714285714
 ```
 ## Executing using JAR file
