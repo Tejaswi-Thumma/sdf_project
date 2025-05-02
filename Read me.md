@@ -1,141 +1,160 @@
-ARBITARY ARITHMETIC LIBRARY
-
-OVERVIEW
-
-Arbitrary Arithmetic Library is a Java-based utility designed to perform arbitrary-precision arithmetic on both integers and floating-point numbers. It features two primary classes: AInteger for handling large integer operations and AFloat for high-precision floating-point computations. The library supports fundamental arithmetic operations—addition, subtraction, multiplication, and division—capable of processing numbers significantly larger and more precise than those supported by Java's standard data types.
-
-A command-line interface is provided through the MyInfArith class, allowing users to interactively perform calculations. This project was developed as part of a software engineering course to illustrate the implementation of custom high-precision arithmetic logic in Java.
-
-PREREQUASITES
-
-To build and Script the project, ensure the following tools are installed:
-- Java Development Kit (JDK): Version 8 or higher (e.g., OpenJDK or Oracle JDK).
-- Apache Ant: For compiling the project using the "build.xml" file.
-- Python 3: For Scriptning the "script.py" script to compile and execute the program.
-- Git: For cloning the repository and managing version control.
-- A command-line interface (e.g.,VS Code Terminal or Terminal on macOS/Linux, Git Bash or PowerShell on Windows).
-
-Verify Installation:
-
-java -version
-ant -version
-python3 --version
-git --version
-
-
-Installation
-Follow these steps to set up the project:
-
-Clone the Repository:
-git clone <repository-url>
-cd <repository-directory>
-
-Compile the Project:Use the Ant build script to compile the Java source files:
-ant
-
-This creates a build directory containing compiled .class files.
-you can remove them by deleting .class files.
-
-
-Usage
-The library can be used via the MyInfArith command-line driver or by integrating the AInteger and AFloat classes into your Java code.
-Using the Command-Line Driver (MyInfArith)
-The MyInfArith class performs arithmetic operations on integers or floating-point numbers via command-line arguments.
-Syntax (Preferred Method):
-python3 Script.py <type> <operation> <num1> <num2>
-
-
-<type>: int (for AInteger) or float (for AFloat).
-<operation>: add, sub, mul, or div.
-<num1>: First number (e.g.= "-2314312", "-50.678").
-<num2>: Second number.
-
-Examples:
-
-Integer addition:
-python3 Script.py int add 1234 8765
-
-Output: 9999
-
-Integer division:
-python3 Script.py int div 178 12
-
-Output: 14
-
-Float subtraction:
-python3 Script.py float sub 144.9 54.6
-
-Output: 90.30000(..30 digits after decimal)
-
-Float multiplication:
-python3 Script.py float mul 1.38 4.2
-
-Output: 5.796
-
-
-Alternative (Direct Java Command):After compiling, Script directly:
-java -cp build arbitraryarithmetic.MyInfArith int add 123 456
-
-Output: 579
-Notes:
-
-The Script.py script automatically compiles the project if the build directory is missing.
-Division by zero outputs: Division by zero is not allowed.
-
-Using the Library in Code
-To use AInteger or AFloat in your Java program:
-
-Add the Library:Ensure the compiled .class files in the build directory are in your classpath, or include the source files in your project.
-
-Example Code:
-package arbitraryarithmetic
-
-public class Example {
-    public static void main(String[] args) {
-        // Integer arithmetic
-        AInteger a = new AInteger("235");
-        AInteger b = new AInteger("167");
-        System.out.println("Sum: " + a.add(b)); // Output: Sum :402
-        System.out.println("Product: " + a.mul(b)); // Output: Product :39245
-
-        // Float arithmetic
-        AFloat x = new AFloat("1.38");
-        AFloat y = new AFloat("5.0");
-        System.out.println("Product: " + x.mul(y)); // Output: Product : 6.9
-        System.out.println("Difference: " + x.subtract(y)); // Output: Difference : -3.62
-    }
-}
-
-
-Compile and Script:
-ant
-python3 Script.py
-input
-
-
-Directory Structure
-
-<repository-root>/
-
-├── arbitraryarithmetic/        
-│   ├── AInteger.java           # Arbitrary-precision Integer class
-│   ├── AFloat.java             # Arbitrary-precision Float class
-│   └── MyInfArith.java         # Main or utility class
-│
-├── default_test_cases.txt          
-│-- compile.py
-├── build.xml                   # Ant build script
-├── Script.py                   # Helper script (optional)
-├── build/                      # Compiled output
-└── README.md                   # Project documentation
 
 
 
-Git Usage
-The project uses Git for version control. To view commits and tags:
-git log --oneline
-To push edited files into git project :
-git add .
-git commit -m "message"
-git push origin main
 
+
+
+
+# CUSTOM ARBITRARY-PRECISION CALCULATOR
+
+## INTRODUCTION
+- The main objective of this library is the implementation of an **Infinite/Arbitrary-Precision Calculator**.
+- It allows for handling large numbers with arbitrary precision, which are beyond the capabilities of standard data types.
+- The library includes support for basic arithmetic operations such as addition, subtraction, multiplication, and division, with accurate results even for very large or small numbers.
+
+## IMPLEMENTATION
+- **Language**: Java 23
+- **Build Tool**: Ant
+
+### FILE STRUCTURE
+- The library contains a package called `arbitraryarithmetic` with the following files:
+  - **`Ainteger.java`**: Contains the implementation for arbitrary-precision integer arithmetic.
+  - **`Afloat.java`**: Contains the implementation for arbitrary-precision floating-point arithmetic.
+  - **`MyInfArith.java`**: The main class that integrates and provides the interface for performing arbitrary-precision arithmetic operations.
+
+## LIMITATIONS OF BUILT-IN TYPES
+
+| DATA TYPE   | MINIMUM VALUE                         | MAXIMUM VALUE                           |
+|-------------|---------------------------------------|-----------------------------------------|
+| `int`       | -2^31 (-2,147,483,648)                | 2^31 - 1 (2,147,483,647)                |
+| `long`      | -2^63 (-9,223,372,036,854,775,808)    | 2^63 - 1 (9,223,372,036,854,775,807)    |
+| `float`     | -3.4028235e^38                        | 3.4028235e^38                           |
+| `double`    | -1.7976931348623157e^308              | 1.7976931348623157e^308                 |
+
+- This library can handle numbers that exceed the range of these standard types.
+
+### FEATURES
+- Handles arbitrary-precision integers.
+- Supports addition, subtraction, multiplication, and division.
+- Can handle negative numbers.
+- String-based implementation, ensuring large numbers are accurately represented.
+- Provides basic utility methods for comparison, copying, and parsing.
+
+## COMPONENTS
+
+### Ainteger.JAVA (INTEGER CLASS)
+- The `Ainteger` class handles operations for arbitrarily large integers, including support for negative values. It supports basic arithmetic operations such as addition, subtraction, multiplication, and division, using string-based representations for the numbers. This class ensures no precision is lost, even with very large numbers.
+- This class file belongs to the `arbitraryarithmetic` package.
+
+#### MEMBER VARIABLES
+- It has a protected member `num` of type `String`.
+
+#### CONSTRUCTORS
+1. **DEFAULT CONSTRUCTOR**:
+   - **`public Ainteger()`**: Initializes the `num` member variable to the string `"0"`, representing the integer value 0.
+   
+2. **PARAMETERIZED CONSTRUCTOR**:
+   - **`public Ainteger(String s)`**: Initializes the `num` member variable with the value provided in the string `s`.
+
+#### KEY METHODS
+- `copy()`: Returns a new Ainteger object initialized with the current `num` value.
+- **`addition(Ainteger a)`**:  
+  Calls the `add(Ainteger a)` method to add the current `Ainteger` with another `Ainteger`. It then trims the output of the `add` method to ensure the result is correctly formatted.
+- **`subtract(Ainteger a)`**:  
+  Calls the `sub(Ainteger a)` method to subtract another `Ainteger` from the current `Ainteger`. It then trims the output of the `sub` method.
+- **`multiply(Ainteger a)`**:  
+  Calls the `mult(Ainteger a)` method to multiply the current `Ainteger` with another `Ainteger`. It then trims the output of the `mult` method.
+- **`divide(Ainteger a)`**:  
+  Calls the `division(Ainteger)` method where it divides the current `Ainteger` by another `Ainteger` and returns the list of quotient and remainder. It returns the quotient from the output of the `division` method.
+- `compareTo(Ainteger a)`: Compares two `Ainteger` objects.
+- `remove_zeroes(String s)`: Removes leading or trailing zeros from a string representation of a number.
+- `parse(String s)`: Parses a string into an `Ainteger` object.
+- `valid_check(String s)`: Checks if a string is a valid integer.
+
+### Afloat.JAVA (FLOAT CLASS)
+- This class file belongs to the `arbitraryarithmetic` package.
+- The `Afloat` class handles arbitrary-precision floating-point numbers, offering support for both integer and decimal parts. Like the `Ainteger` class, `Afloat` uses string-based representations to store numbers and ensures no precision loss for large numbers. This class supports operations like addition, subtraction, multiplication, and division on floating-point numbers.
+
+#### MEMBER VARIABLES
+- `num`: Stores the number as a string.
+- `intpart`: Stores the integer part of the number.
+- `decimalpart`: Stores the decimal part of the number.
+- `no_decimal_num`: Stores the number string without the decimal.
+
+#### CONSTRUCTORS
+- **`Afloat()`**: Initializes an `Afloat` object with a default value of `0.0`.
+- **`Afloat(String inp)`**: Initializes an `Afloat` object with a given string input representing a floating-point number.
+  - If the input does not contain a decimal point, it appends `.0` to treat it as a floating-point number.
+  - Splits the input into two parts:
+    - `intpart`: The part before the decimal.
+    - `decimalpart`: The part after the decimal.
+  - Concatenates `intpart` and `decimalpart` to get `no_decimal_num`, which is used for internal arithmetic operations.
+
+#### KEY METHODS
+- `copy()`: Returns a new Afloat object initialized with the current `num` value.
+- **`addition(Afloat a)`**:  
+  Calls the `add(Afloat a)` method to add the current `Afloat` with another `Afloat`. It then trims the output of the `add` method to ensure the result is correctly formatted.
+- **`subtract(Afloat a)`**:  
+  Calls the `sub(Afloat a)` method to subtract another `Afloat` from the current `Afloat`. It then trims the output of the `sub` method.
+- **`multiply(Afloat a)`**:  
+  Calls the `mult(Afloat a)` method to multiply the current `Afloat` with another `Afloat`. It then trims the output of the `mult` method.
+- **`divide(Afloat a)`**:  
+  Calls the `division(Afloat a)` method where it divides the current `Afloat` by another `Afloat`. It then trims the output of the `division` method.
+- `compareTo(Afloat a)`: Compares two `Afloat` objects.
+- `remove_zeroes(String s)`: Removes leading or trailing zeros from a string representation of a number.
+- `parse(String s)`: Parses a string into an `Afloat` object.
+- `valid_check(String s)`: Checks if a string is a valid float.
+
+### MyInfArith.JAVA
+- It is a Java file which imports the package and runs test cases.
+- It takes command-line arguments and performs arithmetic operations.
+
+### EXECUTING USING MYINFARITH
+To perform addition, subtraction, multiplication, and division, run the following commands:
+- command MyInfArith <int/float> <add/sub/mul/div> <operand1> <operand2>
+```bash
+java MyInfArith int add 49485475 9897557
+Result: 59383032
+java MyInfArith float sub 0.0099 0009
+Result: -8.9901
+java MyInfArith int mul 6 7
+Result: 42
+java MyInfArith int div 20 4
+Result: 5
+```
+## Runner.py
+- It is a python script which run the program with command lines arguments using MyInfarith.java
+---
+## Executing using runner.py
+To perform addition, subtraction, multiplication, and division, run the following commands:
+- command python runner.py <int/float> <add/sub/mul/div> <operand1> <operand2>
+```bash
+python3 runner.py int add 2402726 -200000
+Result: 2202726
+ python3 runner.py int sub 58757 -8877
+Result: 67634
+python3 runner.py float mul 9.009 -07 
+Result: -63.063
+python3 runner.py float div 9 7 
+Result: 1.285714285714285714285714285714
+```
+## Executing using JAR file
+To perform addition, subtraction, multiplication, and division, run the following command:
+- command: java -cp arbitraryarithmetic/aarithmetic.jar:. MyInfArith <int/float> <add/sub/mul/div> <operand1> <operand2>
+## Installation
+
+Simply download or clone this repository and add the `Ainteger` and `Afloat` classes to your Java project. There's no additional installation required.
+
+## Conclusion
+### Key Learning
+- Arbitrary Precision Arithmetic: Implementing custom data types for handling large numbers, which standard Java data types can't manage due to their fixed size and precision limits.
+- String-based Representation: Using strings to represent large integers and floating-point numbers ensures that precision is maintained across arithmetic operations.
+- Learned How to use ant build tool and using Python to run commands in command line.
+### Veification approch
+- Each arithmetic operation (addition, subtraction, multiplication, division) was tested with both small and large numbers to ensure the results are accurate.
+- Special attention was given to operations with negative numbers, zero, and very large numbers.
+- The results from the library were compared against the built-in Java BigInteger and BigDecimal classes to verify correctness.
+### Limitations
+- It does not have other operations exception these four.
+- The string-based arithmetic operations may be slower compared to built-in data types, especially for very large numbers.
+- Handling large numbers using strings can consume a significant amount of memory, which may be a concern for extremely large values.
