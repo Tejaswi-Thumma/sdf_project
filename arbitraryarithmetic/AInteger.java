@@ -24,6 +24,10 @@ public class AInteger {
         return new AInteger(s);
     }
 
+    public String toString(){
+        return integer;
+    }
+
     //removing leading zeros and keeping the sign same
     public static String removing_leading_zeros ( String s) {
         boolean isNegative = false;
@@ -323,41 +327,62 @@ public class AInteger {
 
     }
 
+
+    
+
     public String multiply_these_both_strings(String num1, String num2) {
 
-        // Remove leading zeros
+        boolean negative = false;
+        if (num1.equals("0") || num2.equals("0")) return new AInteger().toString();
+
+        
+        if (num1.charAt(0) == '-') {
+            negative = !negative;
+            num1 = num1.substring(1);
+        }
+        if (num2.charAt(0) == '-') {
+            negative = !negative;
+            num2 = num2.substring(1);
+        }
+        
         num1 = removing_leading_zeros(num1);
         num2 = removing_leading_zeros(num2);
 
-        if(num1.equals("0") || num2.equals("0")) {
-            return "0";
-        }
-        // creating 2 integer arrays for given strings
-        int[] array1_num1 = stringToIntegerArray(num1);
-        int[] array2_num2 = stringToIntegerArray(num2);
+        String output = "0";
+        int len1 = num1.length();
+        int len2 = num2.length();
+        int i = len1-1;
 
-        int[] result_array = new int[array1_num1.length + array2_num2.length];
-
-        for(int i = array2_num2.length -1; i>=0 ; i--) {
+        while(i>= 0){
+            int[] sub = new int[len2+1];
             int carry = 0;
-            int position_of_result = array1_num1.length +i;
-
-            for(int j=array1_num1.length-1; j>=0;j++) {
-                int product = (array2_num2[i] * array1_num1[j]) + result_array[position_of_result] + carry;
-                result_array[position_of_result] = product%10;
-                carry = product/10;
-                position_of_result--;
+            int k=0;
+            for(int j=len2-1;j >= 0;j--){
+                int sum = (num1.charAt(i)-'0')*(num2.charAt(j)-'0') + carry;
+                sub[k++]= sum%10;
+                carry = sum/10;
             }
-            result_array[position_of_result] += carry;
- 
+            if(carry != 0){
+                sub[k++] = carry;
+            }
+            
+            char[] string = new char[k];
+            for(int m = k-1,n=0; m>=0;m--,n++){
+                string[n] = (char)(sub[m]+'0');
+            }
+            String Str = new String(string);
+            for(int m =(len1-1-i);m>0;m--){
+                Str+="0";
+            }
+            AInteger a = new AInteger(output);
+            output = a.add(new AInteger(Str)).integer;
+            i--;
         }
-        String result_string = arrayTostring(result_array);
-        String final_result = removing_leading_zeros(result_string);
-
-        return final_result;
-
-
+        String finalStr =  negative ? "-" + output: output;
+        return new AInteger(finalStr).toString();
     }
+
+    
 
     public String divide_these_both_strings(String num1, String num2) {
 
@@ -395,9 +420,6 @@ public class AInteger {
                 count++;                           
             }
 
-            if(count == 0 && i == num1.length() -1) {
-                continue;
-            }
         
             quotient.append(count);                 
         }
@@ -408,5 +430,49 @@ public class AInteger {
             return e.getMessage();
     }
 
+    }
+
+    public static void main(String[] args) {
+        // Addition tests
+        System.out.println("Addition:");
+        System.out.println(new AInteger("123").add(new AInteger("456"))); // 579
+        System.out.println(new AInteger("-100").add(new AInteger("50"))); // -50
+        System.out.println(new AInteger("0").add(new AInteger("0")));     // 0
+        System.out.println(new AInteger("999999999").add(new AInteger("1"))); // 1000000000
+
+        // Subtraction tests
+        System.out.println("\nSubtraction:");
+        System.out.println(new AInteger("500").subtract(new AInteger("200"))); // 300
+        System.out.println(new AInteger("-50").subtract(new AInteger("100"))); // -150
+        System.out.println(new AInteger("1000").subtract(new AInteger("1000"))); // 0
+
+        // Multiplication tests
+        System.out.println("\nMultiplication:");
+        System.out.println(new AInteger("12").multiply(new AInteger("12"))); // 144
+        System.out.println(new AInteger("-7").multiply(new AInteger("8"))); // -56
+        System.out.println(new AInteger("0").multiply(new AInteger("12345"))); // 0
+
+        // Division tests
+        System.out.println("\nDivision:");
+        System.out.println(new AInteger("100").divide(new AInteger("5"))); // 20
+        System.out.println(new AInteger("-100").divide(new AInteger("10"))); // -10
+        System.out.println(new AInteger("7").divide(new AInteger("2"))); // 3
+
+        // Division by zero (should handle or throw)
+        try {
+            System.out.println(new AInteger("1").divide(new AInteger("0")));
+        } catch (ArithmeticException e) {
+            System.out.println("Division by zero error");
+        }
+
+        // Large number addition
+        System.out.println("\nLarge Numbers:");
+        System.out.println(new AInteger("123456789123456789").add(new AInteger("1"))); // 123456789123456790
+
+        // Negative result
+        System.out.println(new AInteger("5").subtract(new AInteger("10"))); // -5
+
+        // Zero multiplication
+        System.out.println(new AInteger("0").multiply(new AInteger("0"))); // 0
     }
 }
