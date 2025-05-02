@@ -117,78 +117,111 @@ public class AFloat {
             return sb.toString();
     }
     
-
     public AFloat subtract(AFloat other) {
         String num1 = this.float_value;
         String num2 = other.float_value;
+        boolean neg1 = num1.startsWith("-");
+        boolean neg2 = num2.startsWith("-");
+        boolean negative = false;
 
-        boolean isNegative1 = num1.startsWith("-");
-        boolean isNegative2 = num2.startsWith("-");
+        if (neg1) num1 = num1.substring(1);
+        if (neg2) num2 = num2.substring(1);
+        if (num1.startsWith(".")) num1 = "0" + num1;
+        if (num2.startsWith(".")) num2 = "0" + num2;
+        if (num1.endsWith(".")) num1 += "0";
+        if (num2.endsWith(".")) num2 += "0";
+
+
+        if (neg1 && !neg2) {
+            return new AFloat("-" + new AFloat(num1).add(new AFloat(num2)).float_value);
+        } else if (!neg1 && neg2) {
+            return this.add(new AFloat(num2)); 
+        } else if (neg1 && neg2) {
+            return new AFloat(num2).subtract(new AFloat(num1)); 
+        }
+
+        if (!num1.contains(".")) num1 += ".0";
+        if (!num2.contains(".")) num2 += ".0";
     
-        if (isNegative1) {
-            num1 = num1.substring(1);
+        int dec1 = num1.length() - 1 - num1.indexOf('.');
+        int dec2 = num2.length() - 1 - num2.indexOf('.');
+        while (dec1 < dec2) {
+            num1 += "0";
+            dec1++;
         }
-        if (isNegative2) {
-            num2 = num2.substring(1);
+        while (dec2 < dec1) {
+            num2 += "0";
+            dec2++;
         }
-
-
-        // Handle negative cases
-        if (isNegative1 && isNegative2) { // -a - (-b) = b - a
-            return new AFloat(num2).subtract(new AFloat(num1));
-        } else if (isNegative1) {
-            // (-a) - b == -(b + a)
-            return new AFloat("-" + new AFloat(num2).add(new AFloat(num1)).toString());
-        } else if (isNegative2) {
-            // a - (-b) == a + b
-            return new AFloat(num1).add(new AFloat(num2));
+    
+        int int1 = num1.indexOf('.');
+        int int2 = num2.indexOf('.');
+        while (int1 < int2) {
+            num1 = "0" + num1;
+            int1++;
         }
-
-           // Splitting the given string into integer and decimal parts
-        String[] parts1 = num1.split("\\.");
-        String[] parts2 = num2.split("\\.");
-
-        String integerPart1 = parts1[0]; // integer part goes to integerPart1
-        String decimalPart1 = parts1.length > 1 ? parts1[1] : "0"; // if parts1 have length greater than 1, then decimal part1 = parts1[1] or else "0"
-        String integerPart2 = parts2[0];
-        String decimalPart2 = parts2.length > 1 ? parts2[1] : "0";
-
-        // making decimal digits equal for both strings so we can easily add or subtract 
-        int maxDecimalLength = Math.max(decimalPart1.length(), decimalPart2.length());
-        while (decimalPart1.length() < maxDecimalLength) decimalPart1 += "0";
-        while (decimalPart2.length() < maxDecimalLength) decimalPart2 += "0";
-
-        // Subtracting decimal parts
-        AInteger decimalDiff= new AInteger(decimalPart1).subtract(new AInteger(decimalPart2));
-        String decimalDiffStr = decimalDiff.toString();
-
-        // Subtracting integer parts
-        AInteger integerDiff = new AInteger(integerPart1).subtract(new AInteger(integerPart2));
-        String integerDiffStr = integerDiff.toString();
-
-        // if subtraction of decimal numbers is negative that means we need a borrow so we subtract one from integer difference
-        //for decimal diff as it is negative and we took a borrow we add no. of zeros as in no. of decimal places for 1 and add 1 and that negative decimaldifference
-        if(decimalDiffStr.startsWith("-")) {
-            integerDiff = integerDiff.subtract(new AInteger("1"));
-            decimalDiff = new AInteger(generateOneFollowedByZeros(maxDecimalLength)).add(new AInteger(decimalDiffStr));
-
+        while (int2 < int1) {
+            num2 = "0" + num2;
+            int2++;
         }
-
-        // Remove zeros from last, but keep at least one digit as we need a float
-        int end = decimalDiffStr.length();
-        while (end > 1 && decimalDiffStr.charAt(end - 1) == '0') end--;
-        decimalDiffStr = decimalDiffStr.substring(0, end);
-
-
-        String finalResult = integerDiffStr + "." + decimalDiffStr;
-
-        if (finalResult.equals("-0.0") || finalResult.equals("0.0") || finalResult.equals("-0")) {
-            finalResult = "0.0";
+    
+        String num1Comp = num1.replace(".", "");
+        String num2Comp = num2.replace(".", "");
+        if (num1Comp.compareTo(num2Comp) < 0) {
+            negative = true;
+            String temp = num1;
+            num1 = num2;
+            num2 = temp;
         }
-
-        return new AFloat(finalResult);
-
+    
+        int len = num1.length();
+        int carry = 0;
+        StringBuilder result = new StringBuilder();
+    
+        for (int i = len - 1; i >= 0; i--) {
+            char c1 = num1.charAt(i);
+            char c2 = num2.charAt(i);
+            if (c1 == '.') {
+                result.append('.');
+                continue;
+            }
+    
+            int digit1 = (c1 - '0') + carry;
+            int digit2 = c2 - '0';
+    
+            if (digit1 < digit2) {
+                digit1 += 10;
+                carry = -1;
+            } else {
+                carry = 0;
+            }
+    
+            result.append((char) ((digit1 - digit2) + '0'));
+        }
+    
+        if (negative) result.append('-');
+    
+        String output = result.reverse().toString();
+    
+        int start = 0;
+        while (start < output.length() - 1 && output.charAt(start) == '0' && output.charAt(start + 1) != '.') {
+            start++;
+        }
+        output = output.substring(start);
+    
+        if (output.contains(".")) {
+            while (output.endsWith("0")) output = output.substring(0, output.length() - 1);
+            if (output.endsWith(".")) output = output.substring(0, output.length() - 1);
+        }
+        
+        if (output.isEmpty()) output = "0";
+        if (negative && !output.equals("0")) output = "-" + output;
+        return new AFloat(output);
     }
+    
+    
+    
+    
 
     public AFloat multiply(AFloat other) {
         String num1 = this.float_value;

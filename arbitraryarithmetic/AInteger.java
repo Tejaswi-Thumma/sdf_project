@@ -1,7 +1,7 @@
 package arbitraryarithmetic;
 
 public class AInteger {
-    protected String integer;
+    public String integer;
 
     // defalut constructor
     public AInteger () {
