@@ -68,12 +68,6 @@
 - This class file belongs to the `arbitraryarithmetic` package.
 - The `AFloat` class handles arbitrary-precision floating-point numbers, offering support for both integer and decimal parts. Like the `AInteger` class, `AFloat` uses string-based representations to store numbers and ensures no precision loss for large numbers. This class supports operations like add, subtraction, multiplication, and division on floating-point numbers.
 
-#### MEMBER VARIABLES
-- `num`: Stores the number as a string.
-- `intpart`: Stores the integer part of the number.
-- `decimalpart`: Stores the decimal part of the number.
-- `no_decimal_num`: Stores the number string without the decimal.
-
 #### CONSTRUCTORS
 - **`AFloat()`**: Initializes an `AFloat` object with a default value of `0.0`.
 - **`AFloat(String inp)`**: Initializes an `AFloat` object with a given string input representing a floating-point number.
