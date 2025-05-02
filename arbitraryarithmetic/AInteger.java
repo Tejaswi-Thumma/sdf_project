@@ -432,47 +432,5 @@ public class AInteger {
 
     }
 
-    public static void main(String[] args) {
-        // Addition tests
-        System.out.println("Addition:");
-        System.out.println(new AInteger("123").add(new AInteger("456"))); // 579
-        System.out.println(new AInteger("-100").add(new AInteger("50"))); // -50
-        System.out.println(new AInteger("0").add(new AInteger("0")));     // 0
-        System.out.println(new AInteger("999999999").add(new AInteger("1"))); // 1000000000
-
-        // Subtraction tests
-        System.out.println("\nSubtraction:");
-        System.out.println(new AInteger("500").subtract(new AInteger("200"))); // 300
-        System.out.println(new AInteger("-50").subtract(new AInteger("100"))); // -150
-        System.out.println(new AInteger("1000").subtract(new AInteger("1000"))); // 0
-
-        // Multiplication tests
-        System.out.println("\nMultiplication:");
-        System.out.println(new AInteger("12").multiply(new AInteger("12"))); // 144
-        System.out.println(new AInteger("-7").multiply(new AInteger("8"))); // -56
-        System.out.println(new AInteger("0").multiply(new AInteger("12345"))); // 0
-
-        // Division tests
-        System.out.println("\nDivision:");
-        System.out.println(new AInteger("100").divide(new AInteger("5"))); // 20
-        System.out.println(new AInteger("-100").divide(new AInteger("10"))); // -10
-        System.out.println(new AInteger("7").divide(new AInteger("2"))); // 3
-
-        // Division by zero (should handle or throw)
-        try {
-            System.out.println(new AInteger("1").divide(new AInteger("0")));
-        } catch (ArithmeticException e) {
-            System.out.println("Division by zero error");
-        }
-
-        // Large number addition
-        System.out.println("\nLarge Numbers:");
-        System.out.println(new AInteger("123456789123456789").add(new AInteger("1"))); // 123456789123456790
-
-        // Negative result
-        System.out.println(new AInteger("5").subtract(new AInteger("10"))); // -5
-
-        // Zero multiplication
-        System.out.println(new AInteger("0").multiply(new AInteger("0"))); // 0
-    }
+    
 }
