@@ -163,7 +163,7 @@ public class AFloat {
         String decimalDiffStr = decimalDiff.toString();
 
         // Subtracting integer parts
-        AInteger integerDiff = new AInteger(integerPart1).add(new AInteger(integerPart2));
+        AInteger integerDiff = new AInteger(integerPart1).subtract(new AInteger(integerPart2));
         String integerDiffStr = integerDiff.toString();
 
         // if subtraction of decimal numbers is negative that means we need a borrow so we subtract one from integer difference
@@ -348,55 +348,5 @@ public class AFloat {
     }
 
 
-
-
-
-
-public static void main (String [] args) {
-    AFloat[] dividends = {
-        new AFloat("10"),
-        new AFloat("1"),
-        new AFloat("0.01"),
-        new AFloat("0.0000001"),
-        new AFloat("123456.789"),
-        new AFloat("-10"),
-        new AFloat("10"),
-        new AFloat("-10"),
-        new AFloat("10"),
-        new AFloat("123456789123456789")
-    };
-
-    AFloat[] divisors = {
-        new AFloat("2"),
-        new AFloat("3"),
-        new AFloat("100"),
-        new AFloat("1000"),
-        new AFloat("0.001"),
-        new AFloat("2"),
-        new AFloat("-2"),
-        new AFloat("-2"),
-        new AFloat("0"),
-        new AFloat("0.00001")
-    };
-
-
-    String[] descriptions = {
-        "10 / 2",
-        "1 / 3",
-        "0.01 / 100",
-        "0.0000001 / 1000",
-        "123456.789 / 0.001",
-        "-10 / 2",
-        "10 / -2",
-        "-10 / -2",
-        "10 / 0",
-        "123456789123456789 / 0.00001"
-    };
-
-    for (int i = 0; i < dividends.length; i++) {
-        AFloat result = dividends[i].divide(divisors[i]);
-        System.out.println(result.float_value);
-    }
-}
 }
 
