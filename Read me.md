@@ -80,8 +80,7 @@ Output: 579
 Notes:
 
 The Script.py script automatically compiles the project if the build directory is missing.
-Division by zero outputs: Division by zero.
-Invalid inputs (e.g., non-numeric strings) may cause exceptions, displayed as Error: <message>.
+Division by zero outputs: Division by zero is not allowed.
 
 Using the Library in Code
 To use AInteger or AFloat in your Java program:
@@ -89,48 +88,54 @@ To use AInteger or AFloat in your Java program:
 Add the Library:Ensure the compiled .class files in the build directory are in your classpath, or include the source files in your project.
 
 Example Code:
-import arbitraryarithmetic.AInteger;
-import arbitraryarithmetic.AFloat;
+package arbitraryarithmetic
 
 public class Example {
     public static void main(String[] args) {
         // Integer arithmetic
-        AInteger a = new AInteger("123");
-        AInteger b = new AInteger("456");
-        System.out.println("Sum: " + a.add(b)); // Output: 579
-        System.out.println("Product: " + a.mul(b)); // Output: 56088
+        AInteger a = new AInteger("235");
+        AInteger b = new AInteger("167");
+        System.out.println("Sum: " + a.add(b)); // Output: Sum :402
+        System.out.println("Product: " + a.mul(b)); // Output: Product :39245
 
         // Float arithmetic
-        AFloat x = new AFloat("3.14");
-        AFloat y = new AFloat("2.0");
-        System.out.println("Product: " + x.mul(y)); // Output: 6.28
-        System.out.println("Difference: " + x.subtract(y)); // Output: 1.14
+        AFloat x = new AFloat("1.38");
+        AFloat y = new AFloat("5.0");
+        System.out.println("Product: " + x.mul(y)); // Output: Product : 6.9
+        System.out.println("Difference: " + x.subtract(y)); // Output: Difference : -3.62
     }
 }
 
 
 Compile and Script:
-javac -cp build Example.java
-java -cp .:build Example
-
-On Windows, use ; instead of : in the classpath.
+ant
+python3 Script.py
+input
 
 
 Directory Structure
+
 <repository-root>/
+
 ├── arbitraryarithmetic/        
-│   ├── AInteger.java           
-│   ├── AFloat.java             
-│   └── MyInfArith.java         
-├── build.xml                   
-├── Script.py                      
-├── build/                      
-└── README.md                  
+│   ├── AInteger.java           # Arbitrary-precision Integer class
+│   ├── AFloat.java             # Arbitrary-precision Float class
+│   └── MyInfArith.java         # Main or utility class
+│
+├── default_test_cases.txt          
+│-- compile.py
+├── build.xml                   # Ant build script
+├── Script.py                   # Helper script (optional)
+├── build/                      # Compiled output
+└── README.md                   # Project documentation
+
 
 
 Git Usage
 The project uses Git for version control. To view commits and tags:
 git log --oneline
-git tag
+To push edited files into git project :
+git add .
+git commit -m "message"
+git push origin main
 
-Tags were assigned for major milestones (e.g., v1.0-initial, v1.3-final).
