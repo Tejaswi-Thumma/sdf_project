@@ -104,7 +104,8 @@
 
 ### EXECUTING USING MYINFARITH
 To perform addition, subtraction, multiplication, and division, run the following commands:
-- command MyInfArith <int/float> <add/sub/mul/div> <operand1> <operand2>
+- command python3 Script.py
+- <int/float> <add/sub/mul/div> <operand1> <operand2>
 ```bash
 java MyInfArith int add 49485475 9897557
 Result: 59383032
@@ -115,10 +116,10 @@ Result: 42
 java MyInfArith int div 20 4
 Result: 5
 ```
-## Runner.py
+## Script.py
 - It is a python script which run the program with command lines arguments using MyInfarith.java
 ---
-## Executing using runner.py
+## Executing using Script.py
 To perform addition, subtraction, multiplication, and division, run the following commands:
 - command python runner.py <int/float> <add/sub/mul/div> <operand1> <operand2>
 ```bash
