@@ -122,10 +122,10 @@ Result: 42
 java MyInfArith int div 20 4
 Result: 5
 ```
-## Runner.py
+## Script.py
 - It is a python script which run the program with command lines arguments using MyInfarith.java
 ---
-## Executing using runner.py
+## Executing using Script.py
 To perform addition, subtraction, multiplication, and division, run the following commands:
 - command python runner.py <int/float> <add/sub/mul/div> <operand1> <operand2>
 ```bash
@@ -140,7 +140,8 @@ Result: 1.285714285714285714285714285714
 ```
 ## Executing using JAR file
 To perform addition, subtraction, multiplication, and division, run the following command:
-- command: java -cp arbitraryarithmetic/aarithmetic.jar:. MyInfArith <int/float> <add/sub/mul/div> <operand1> <operand2>
+- command: python3 Script.py
+- <int/float> <add/sub/mul/div> <operand1> <operand2>
 ## Installation
 
 Simply download or clone this repository and add the `Ainteger` and `Afloat` classes to your Java project. There's no additional installation required.
